@@ -3,6 +3,7 @@ package mx.haya.heroesappkt.data.model
 import com.google.gson.Gson
 
 data class SuperHeroModel(
+    val id: String,
     val name: String,
     val image: ImageModel,
     val powerstats: PowerstatsModel,

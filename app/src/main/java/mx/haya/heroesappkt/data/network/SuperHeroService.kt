@@ -1,5 +1,6 @@
 package mx.haya.heroesappkt.data.network
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mx.haya.heroesappkt.data.model.SuperHeroModel
@@ -11,9 +12,11 @@ class SuperHeroService @Inject constructor() {
 
     private val retrofit = RetrofitHelper.getRetrofit()
 
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+
     suspend fun getSuperHero(id: String): SuperHeroModel? {
         // Creamos la coroutine
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             val response: Response<SuperHeroModel> = retrofit
                 .create(SuperHeroAPI::class.java)
                 .getSuperHero(id)
@@ -22,5 +25,13 @@ class SuperHeroService @Inject constructor() {
         }
     }
 
-
 }
+
+
+
+
+
+
+
+
+

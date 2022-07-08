@@ -1,24 +1,28 @@
 package mx.haya.heroesappkt.ui.hero
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import coil.load
 import dagger.hilt.android.AndroidEntryPoint
-import mx.haya.heroesappkt.R
 import mx.haya.heroesappkt.databinding.HeroFragmentBinding
+import mx.haya.heroesappkt.util.OnBackPressedListener
 
 @AndroidEntryPoint
-class HeroFragment : Fragment() {
+class HeroFragment : Fragment(), OnBackPressedListener {
 
     private val viewModel: HeroViewModel by viewModels()
 
     private lateinit var viewDataBinding: HeroFragmentBinding
+
+    private lateinit var navController: NavController
 
     companion object {
         fun newInstance() = HeroFragment()
@@ -74,9 +78,26 @@ class HeroFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.onCreate()
+        // Nav controller
+        navController = Navigation.findNavController(view)
 
+        val superHeroId = arguments!!.getString("superHeroId")
+
+
+
+        viewModel.onCreate(superHeroId!!)
 
     }
+
+    override fun onBackPressed() {
+
+        val methodName = "onBackPressed"
+
+        Log.d(methodName, "Back pressed")
+
+        navController.navigateUp()
+
+    }
+
 
 }

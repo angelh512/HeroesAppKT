@@ -19,19 +19,17 @@ class HeroViewModel @Inject constructor(
     private val _superHeroModel = MutableLiveData<SuperHeroModel>()
     val superHero: LiveData<SuperHeroModel> = _superHeroModel
 
-    var id: String = "1"
+    fun onCreate(superHeroId: String = "1") {
 
-    fun onCreate() {
-
-        val TAG = "onCreate"
+        val methodName = "onCreate"
 
         viewModelScope.launch {
 
-            val superHero = getSuperHeroUseCase.invoke(id)
+            val superHero = getSuperHeroUseCase.invoke(superHeroId)
 
             if (superHero != null) {
                 _superHeroModel.value = superHero
-                Log.d(TAG, superHero.toString())
+                Log.d(methodName, superHero.toString())
             }
         }
     }
